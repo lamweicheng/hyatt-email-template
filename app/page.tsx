@@ -1,19 +1,14 @@
-import { HyattTierListClient } from './HyattTierListClient';
-import { listDashboardPreferences } from '@/lib/dashboard-preferences';
-import { isDatabaseConfigured, listHotels } from '@/lib/hotels';
+import { EmailTemplateBuilderClient } from './EmailTemplateBuilderClient';
+import { isDatabaseConfigured, listEmailTemplateSettings } from '@/lib/email-template-settings';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Page() {
-  const [initialHotels, initialDashboardPreferences] = await Promise.all([
-    listHotels(),
-    listDashboardPreferences()
-  ]);
+  const initialSettings = await listEmailTemplateSettings();
 
   return (
-    <HyattTierListClient
-      initialHotels={initialHotels}
-      initialDashboardPreferences={initialDashboardPreferences}
+    <EmailTemplateBuilderClient
+      initialSettings={initialSettings}
       persistenceMode={isDatabaseConfigured() ? 'database' : 'local'}
     />
   );

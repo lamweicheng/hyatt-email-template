@@ -8,46 +8,11 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-enum StayType {
-  EXPLORED
-  FUTURE
-  BUCKET_LIST
-}
-
-enum Tier {
-  S
-  A
-  B
-  C
-  D
-}
-
-model Hotel {
-  id                 String   @id @default(cuid())
-  name               String
-  brand              String
-  stayType           StayType
-  tier               Tier?
-  roomEntries        Json
-  stayEntries        Json
-  bucketListLocation String?
-  bucketListImageUrl String?
-  position           Int      @default(0)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-
-  @@index([stayType, tier, position])
-}
-
-model DashboardPreferences {
-  id                 String   @id
-  topPicks           Json
-  topSuites          Json
-  topFutureStays     Json
-  topExperiences     Json
-  topUnderrated      Json
-  topReturnStays     Json
-  displayPreferences Json
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+model EmailTemplateSettings {
+  id               String   @id
+  defaultTemplate  String
+  topics           Json
+  selectedTopicIds Json
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }

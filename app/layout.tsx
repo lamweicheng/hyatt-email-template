@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Hyatt Tier List',
-  description: 'Curate your own Hyatt tier list across the full brand portfolio.'
+  title: 'Hyatt Email Template',
+  description: 'Build reusable Hyatt email templates from selectable topics.'
 };
 
 export default function RootLayout({

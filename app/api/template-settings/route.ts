@@ -1,17 +1,22 @@
 import { NextResponse } from 'next/server';
-import { createHotel, isDatabaseConfigured, listHotels, normalizeRouteError } from '@/lib/hotels';
+import {
+  isDatabaseConfigured,
+  listEmailTemplateSettings,
+  normalizeEmailTemplateSettingsError,
+  saveEmailTemplateSettings
+} from '@/lib/email-template-settings';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 export async function GET() {
   return NextResponse.json({
-    hotels: await listHotels(),
+    settings: await listEmailTemplateSettings(),
     persistenceMode: isDatabaseConfigured() ? 'database' : 'local'
   });
 }
 
-export async function POST(request: Request) {
+export async function PUT(request: Request) {
   if (!isDatabaseConfigured()) {
     return NextResponse.json(
       { message: 'Database persistence is not configured.' },
@@ -21,10 +26,10 @@ export async function POST(request: Request) {
 
   try {
     const payload = await request.json();
-    const hotel = await createHotel(payload);
-    return NextResponse.json({ hotel }, { status: 201 });
+    const settings = await saveEmailTemplateSettings(payload);
+    return NextResponse.json({ settings });
   } catch (error) {
-    const normalized = normalizeRouteError(error);
+    const normalized = normalizeEmailTemplateSettingsError(error);
     return NextResponse.json({ message: normalized.message }, { status: normalized.status });
   }
 }
