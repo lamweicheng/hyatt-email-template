@@ -3,7 +3,10 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Hyatt Email Template',
-  description: 'Build reusable Hyatt email templates from selectable topics.'
+  description: 'Build reusable Hyatt email templates from selectable topics.',
+  icons: {
+    icon: '/favicon.png'
+  }
 };
 
 export default function RootLayout({
